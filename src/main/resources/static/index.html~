@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #0a0f17, #000);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 90rem;
+        }
+
+        .nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .nav .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-left: 3rem;
+        }
+
+        .nav .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            margin-right: 3rem;
+        }
+
+        .container {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .chat-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            color: white;
+            height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 12px;
+            max-width: 70%;
+            margin: 5px 0;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #0084ff;
+            color: white;
+            align-self: flex-end;
+            text-align: right;
+        }
+        .about-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 20px;
+            border: 2px solid white;
+        }
+        .ai-message {
+            background-color: #e5e5ea;
+            color: black;
+            align-self: flex-start;
+            text-align: left;
+        }
+
+        .chat-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chat-input {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .send-button {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .send-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+.about-section{
+margin-top:150px;
+}
+        .footer {
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            padding: 10px 0;
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <div class="logo">Gen AI</div>
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a href="#" id="about-link">About</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>What do you want to know ?</h1>
+    <p>Prompt, run, edit, and deploy full-stack web apps.</p>
+    <div class="chat-box" id="chat-box"></div>
+    <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="How can Gen AI help you today?" onkeypress="sendMessageKey(event)">
+        <button class="send-button" onclick="sendMessageClick()">Send</button>
+    </div>
+    <div class="buttons-container">
+        <div class="button">Start a blog with Astro</div>
+        <div class="button">Build a mobile app with NativeScript</div>
+        <div class="button">Create a docs site with Vitepress</div>
+        <div class="button">Scaffold UI with shadcn</div>
+        <div class="button">Draft a presentation with Slidev</div>
+        <div class="button">Code a video with Remotion</div>
+    </div>
+</div>
+<div id="about-section" class="about-section">
+    <h2>About Gen AI Owner</h2>
+    <img src="main.PNG" alt="Shadman Shariar" class="about-image">
+    <p><strong>Software Engineer - Shadman Shariar</strong></p>
+    <p>Software Engineer at Aspire Tech Services and Solutions Corporation</p>
+    <p>Bachelor of Science in Computer Science and Engineering Graduate from North South University</p>
+</div>
+<div class="footer">© Gen Ai Support - shadmanshariar007@gmail.com</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const chatBox = document.getElementById("chat-box");
+        const chatInput = document.getElementById("chat-input");
+
+        async function sendMessage() {
+            const prompt = chatInput.value.trim();
+            if (prompt === "") return;
+
+            appendMessage(prompt, "user-message");
+            chatInput.value = "";
+
+            try {
+                const response = await fetch("http://localhost:8080/ai/prompt?prompt=" + encodeURIComponent(prompt));
+
+                if (!response.body) {
+                    appendMessage("Error: No response received.", "ai-message");
+                    return;
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let aiMessage = document.createElement("div");
+                aiMessage.className = "message ai-message";
+                aiMessage.textContent = "Gen AI: ";
+                chatBox.appendChild(aiMessage);
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    aiMessage.textContent += chunk;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            } catch (error) {
+                appendMessage("Error: Unable to get a response.", "ai-message");
+            }
+        }
+
+        function sendMessageKey(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessageClick() {
+            sendMessage();
+        }
+
+        function appendMessage(text, className) {
+            const messageElement = document.createElement("div");
+            messageElement.textContent = text;
+            messageElement.className = "message " + className;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        chatInput.addEventListener("keypress", sendMessageKey);
+        window.sendMessageClick = sendMessageClick;
+    });
+        document.getElementById("about-link").addEventListener("click", function(event) {
+        event.preventDefault();
+        document.getElementById("about-section").scrollIntoView({ behavior: "smooth" });
+    });
+</script>
+</body>
+</html>
